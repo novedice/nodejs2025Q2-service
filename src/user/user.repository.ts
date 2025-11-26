@@ -1,4 +1,4 @@
-import { User } from 'src/interfaces/interfaces';
+import { User } from './interfaces/user.interface';
 
 const users: User[] = [];
 

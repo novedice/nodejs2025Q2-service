@@ -1,23 +1,45 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto, UpdatePasswordDto } from './user.dto';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
+import { CreateUserDto } from './dto/createUser.dto';
+import { UpdatePasswordDto } from './dto/updatePassword.dto';
 import users from './user.repository';
-import { User } from 'src/interfaces/interfaces';
+import { User } from './interfaces/user.interface';
 import { v4, validate } from 'uuid';
 
 @Injectable()
 export class UserService {
-  getUsers(): User[] {
-    return users;
+  getUsers() {
+    return users.map((user) => ({
+      login: user.login,
+      createdAt: user.createdAt,
+      id: user.id,
+      updatedAt: user.updatedAt,
+      version: user.version,
+    }));
   }
   getUser(id: string) {
-    if (!validate(id)) {
-      return 'user id is invalid';
-    }
-    const user = users.find((u) => u.id === id) ?? null;
-    if (!user) return 'user does not exists';
-    return user;
+    if (!validate(id)) throw new BadRequestException('user id is invalid');
+
+    const user = users.find((u) => u.id === id);
+    if (!user) throw new NotFoundException('user does not exist');
+
+    return {
+      login: user.login,
+      createdAt: user.createdAt,
+      id: user.id,
+      updatedAt: user.updatedAt,
+      version: user.version,
+    };
   }
   createUser(createUserDto: CreateUserDto) {
+    if (!createUserDto.login || !createUserDto.password)
+      throw new BadRequestException(
+        'the request does not contain required fields: login and password',
+      );
     const date = Date.now();
     const newUser: User = {
       login: createUserDto.login,
@@ -28,30 +50,43 @@ export class UserService {
       version: 1,
     };
     users.push(newUser);
-    return 'OK';
+    return {
+      login: newUser.login,
+      createdAt: newUser.createdAt,
+      id: newUser.id,
+      updatedAt: newUser.updatedAt,
+      version: newUser.version,
+    };
   }
   updatePassword(id: string, updPasswordDto: UpdatePasswordDto) {
     if (!validate(id)) {
-      return 'user id is invalid';
+      throw new BadRequestException('user id is invalid');
     }
-    const index = users.findIndex((user) => user.id === id) ?? null;
-    if (!index) return 'user does not exists';
+    const index = users.findIndex((user) => user.id === id);
+    if (index === -1) throw new NotFoundException('user does not exists');
     if (users[index].password !== updPasswordDto.oldPassword)
-      return 'old password is wrong';
+      throw new ForbiddenException('old password is wrong');
     const updatedUser = {
       ...users[index],
       password: updPasswordDto.newPassword,
+      version: users[index].version + 1,
+      updatedAt: Date.now(),
     };
-    users.splice(index, 1);
-    users.push(updatedUser);
-    return `update password: id - ${id}, payload: ${updPasswordDto}`;
+    users[index] = updatedUser;
+    return {
+      login: updatedUser.login,
+      createdAt: updatedUser.createdAt,
+      id: updatedUser.id,
+      updatedAt: updatedUser.updatedAt,
+      version: updatedUser.version,
+    };
   }
   deleteUser(id: string) {
     if (!validate(id)) {
-      return 'user id is invalid';
+      throw new BadRequestException('user id is invalid');
     }
     const index = users.findIndex((u) => u.id === id) ?? null;
-    if (!index) return 'user does not exists';
+    if (index === -1) throw new NotFoundException('user does not exists');
     users.splice(index, 1);
   }
 }

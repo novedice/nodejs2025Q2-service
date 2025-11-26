@@ -1,7 +1,16 @@
-import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { TrackService } from './track.service';
+import { TrackDto, UpdateTrack } from './interfaces.track';
 
-@Controller('track/*')
+@Controller('track')
 export class TrackController {
   constructor(private readonly trackService: TrackService) {}
 
@@ -10,19 +19,19 @@ export class TrackController {
     return this.trackService.getTracks();
   }
   @Get(':id')
-  getTrack(@Param() params: any) {
-    return this.trackService.getTrack(params.id);
+  getTrack(@Param('id') id: string) {
+    return this.trackService.getTrack(id);
   }
   @Post()
-  postTrack() {
-    return this.trackService.postTrack();
+  createTrack(@Body() newTrack: TrackDto) {
+    return this.trackService.createTrack(newTrack);
   }
-  @Put()
-  putTrack() {
-    return this.trackService.putTrack();
+  @Put(':id')
+  updateTrack(@Param('id') id: string, @Body() updTrack: UpdateTrack) {
+    return this.trackService.updateTrack(id, updTrack);
   }
-  @Delete()
-  deleteTrack() {
-    return this.trackService.deleteTrack();
+  @Delete(':id')
+  deleteTrack(@Param('id') id: string) {
+    return this.trackService.deleteTrack(id);
   }
 }

@@ -1,7 +1,7 @@
 import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { AlbumService } from './album.service';
 
-@Controller('album/*')
+@Controller('album')
 export class AlbumController {
   constructor(private readonly albumService: AlbumService) {}
 

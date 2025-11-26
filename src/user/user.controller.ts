@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdatePasswordDto } from './user.dto';
 
@@ -17,7 +17,10 @@ export class UsersController {
   }
 
   @Post()
-  createUser(createUserDto: CreateUserDto) {
+  createUser(@Req() request: Request) {
+    console.log('req:', request.body);
+    const createUserDto = request.body as unknown as CreateUserDto;
+    console.log(createUserDto.login);
     return this.userService.createUser(createUserDto);
   }
 
@@ -26,8 +29,8 @@ export class UsersController {
     return this.userService.updatePassword(params.id, updPasswordDto);
   }
 
-  @Delete()
-  deleteUser() {
-    return this.userService.deleteUser();
+  @Delete(':id')
+  deleteUser(@Param() params: any) {
+    return this.userService.deleteUser(params.id);
   }
 }

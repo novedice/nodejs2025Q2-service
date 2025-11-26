@@ -5,7 +5,8 @@ import {
 } from '@nestjs/common';
 import tracks from './track.repository';
 import { v4, validate } from 'uuid';
-import { TrackDto, UpdateTrack } from './interfaces.track';
+import { CreateTrackDto } from './dto/createTrack.dto';
+import { UpdateTrackDto } from './dto/updateTrack.dto';
 
 @Injectable()
 export class TrackService {
@@ -18,7 +19,7 @@ export class TrackService {
     if (!track) throw new NotFoundException('track does not exists');
     return track;
   }
-  createTrack(newTrack: TrackDto) {
+  createTrack(newTrack: CreateTrackDto) {
     if (
       !newTrack.albumId ||
       !newTrack.artistId ||
@@ -31,7 +32,7 @@ export class TrackService {
       id: v4(),
     });
   }
-  updateTrack(trackId: string, updTrack: UpdateTrack) {
+  updateTrack(trackId: string, updTrack: UpdateTrackDto) {
     if (!validate(trackId))
       throw new BadRequestException('trackId is not valid');
     const index = tracks.findIndex((track) => track.id === trackId);

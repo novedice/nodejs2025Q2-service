@@ -8,7 +8,8 @@ import {
   Put,
 } from '@nestjs/common';
 import { TrackService } from './track.service';
-import { TrackDto, UpdateTrack } from './interfaces.track';
+import { CreateTrackDto } from './dto/createTrack.dto';
+import { UpdateTrackDto } from './dto/updateTrack.dto';
 
 @Controller('track')
 export class TrackController {
@@ -23,11 +24,11 @@ export class TrackController {
     return this.trackService.getTrack(id);
   }
   @Post()
-  createTrack(@Body() newTrack: TrackDto) {
+  createTrack(@Body() newTrack: CreateTrackDto) {
     return this.trackService.createTrack(newTrack);
   }
   @Put(':id')
-  updateTrack(@Param('id') id: string, @Body() updTrack: UpdateTrack) {
+  updateTrack(@Param('id') id: string, @Body() updTrack: UpdateTrackDto) {
     return this.trackService.updateTrack(id, updTrack);
   }
   @Delete(':id')

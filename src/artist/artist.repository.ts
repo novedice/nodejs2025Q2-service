@@ -1,4 +1,4 @@
-import { Artist } from 'src/interfaces/interfaces';
+import { Artist } from './interfaces/artist.interface';
 
 const artists: Artist[] = [];
 

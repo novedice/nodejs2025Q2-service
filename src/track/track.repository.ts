@@ -1,4 +1,4 @@
-import { Track } from './interfaces.track';
+import { Track } from './interfaces/track.interfaces';
 
 const tracks: Track[] = [];
 

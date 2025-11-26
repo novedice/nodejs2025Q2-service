@@ -1,4 +1,4 @@
-import { Album } from 'src/interfaces/interfaces';
+import { Album } from './interfaces/album.interface';
 
 const albums: Album[] = [];
 

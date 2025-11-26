@@ -27,10 +27,12 @@ export class TrackService {
       !newTrack.name
     )
       throw new BadRequestException('request does not contain all fields');
-    tracks.push({
+    const track = {
       ...newTrack,
       id: v4(),
-    });
+    };
+    tracks.push(track);
+    return track;
   }
   updateTrack(trackId: string, updTrack: UpdateTrackDto) {
     if (!validate(trackId))

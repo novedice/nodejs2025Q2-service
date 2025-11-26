@@ -1,5 +1,16 @@
-import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { ArtistService } from './artist.service';
+import { CreateArtistDto } from './dto/createArtist.dto';
+import { UpdateArtistDto } from './dto/updateArtist.dto';
 
 @Controller('artist')
 export class ArtistController {
@@ -10,19 +21,20 @@ export class ArtistController {
     return this.artistService.getArtists();
   }
   @Get(':id')
-  getArtist(@Param() params: any) {
-    return this.artistService.getArtist(params.id);
+  getArtist(@Param('id') id: string) {
+    return this.artistService.getArtist(id);
   }
   @Post()
-  postTrack() {
-    return this.artistService.postArtist();
+  createArtist(@Body() newArt: CreateArtistDto) {
+    return this.artistService.createArtist(newArt);
   }
-  @Put()
-  putTrack() {
-    return this.artistService.putArtist();
+  @Put(':id')
+  updateArtist(@Param('id') id: string, updArtist: UpdateArtistDto) {
+    return this.artistService.updateArtist(id, updArtist);
   }
-  @Delete()
-  deleteTrack() {
-    return this.artistService.deleteArtist();
+  @Delete(':id')
+  @HttpCode(204)
+  deleteArtist(@Param('id') id: string) {
+    return this.artistService.deleteArtist(id);
   }
 }

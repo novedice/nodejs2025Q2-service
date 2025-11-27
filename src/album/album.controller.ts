@@ -30,7 +30,7 @@ export class AlbumController {
     return this.albumService.createAlbum(newAlbum);
   }
   @Put(':id')
-  async updateAlbum(@Param('id') id: string, updAlbum: UpdateAlbumDto) {
+  async updateAlbum(@Param('id') id: string, @Body() updAlbum: UpdateAlbumDto) {
     return this.albumService.updateAlbum(id, updAlbum);
   }
   @Delete(':id')

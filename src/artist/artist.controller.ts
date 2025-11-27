@@ -30,7 +30,10 @@ export class ArtistController {
     return this.artistService.createArtist(newArt);
   }
   @Put(':id')
-  async updateArtist(@Param('id') id: string, updArtist: UpdateArtistDto) {
+  async updateArtist(
+    @Param('id') id: string,
+    @Body() updArtist: UpdateArtistDto,
+  ) {
     return this.artistService.updateArtist(id, updArtist);
   }
   @Delete(':id')

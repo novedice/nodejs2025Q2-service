@@ -25,6 +25,7 @@ export class ArtistController {
     return this.artistService.getArtist(id);
   }
   @Post()
+  @HttpCode(201)
   createArtist(@Body() newArt: CreateArtistDto) {
     return this.artistService.createArtist(newArt);
   }
@@ -35,6 +36,6 @@ export class ArtistController {
   @Delete(':id')
   @HttpCode(204)
   deleteArtist(@Param('id') id: string) {
-    return this.artistService.deleteArtist(id);
+    this.artistService.deleteArtist(id);
   }
 }

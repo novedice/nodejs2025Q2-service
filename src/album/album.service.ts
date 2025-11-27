@@ -17,13 +17,13 @@ export class AlbumService {
     if (!validate(albumId)) throw new BadRequestException('albumId is invalid');
     const album = albums.find((alb) => alb.id === albumId);
     if (!album) {
-      throw new NotFoundException('album not found');
+      throw new NotFoundException('album does not exist');
     }
     return album;
   }
   createAlbum(newAlbum: CreateAlbumDto) {
     if (!newAlbum.name || !newAlbum.year || !newAlbum.artistId)
-      throw new BadRequestException('not all fields');
+      throw new BadRequestException('invalid dto');
     const nAlb = {
       ...newAlbum,
       id: v4(),
@@ -35,7 +35,7 @@ export class AlbumService {
     if (!validate(albumId)) throw new BadRequestException('albumId is invalid');
     const index = albums.findIndex((album) => album.id === albumId);
     if (index === -1) {
-      throw new NotFoundException('album not found');
+      throw new NotFoundException('album does not exist');
     }
     const updatedAlbum = {
       name: updAlb.name ? updAlb.name : albums[index].name,
@@ -50,7 +50,7 @@ export class AlbumService {
     if (!validate(albumId)) throw new BadRequestException('albumId is invalid');
     const index = albums.findIndex((album) => album.id === albumId);
     if (index === -1) {
-      throw new NotFoundException('album not found');
+      throw new NotFoundException('album does not exist');
     }
     albums.splice(index, 1);
   }

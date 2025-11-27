@@ -25,6 +25,7 @@ export class AlbumController {
     return this.albumService.getAlbum(id);
   }
   @Post()
+  @HttpCode(201)
   createAlbum(@Body() newAlbum: CreateAlbumDto) {
     return this.albumService.createAlbum(newAlbum);
   }
@@ -35,6 +36,6 @@ export class AlbumController {
   @Delete(':id')
   @HttpCode(204)
   deleteAlbum(@Param('id') id: string) {
-    return this.albumService.deleteAlbum(id);
+    this.albumService.deleteAlbum(id);
   }
 }

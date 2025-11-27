@@ -18,7 +18,7 @@ export class ArtistService {
   }
   createArtist(newArtist: CreateArtistDto) {
     if (!newArtist.grammy || !newArtist.name)
-      throw new BadRequestException('not all fields');
+      throw new BadRequestException('invalid dto');
     const nArt = {
       ...newArtist,
       id: v4(),
@@ -31,7 +31,7 @@ export class ArtistService {
       throw new BadRequestException('artistId is invalid');
     const index = artists.findIndex((art) => art.id === artistId);
     if (index === -1) {
-      throw new NotFoundException('artist not found');
+      throw new NotFoundException('artist does not exist');
     }
     const updatedArt = {
       name: updArtist.name ? updArtist.name : artists[index].name,
@@ -46,7 +46,7 @@ export class ArtistService {
       throw new BadRequestException('artistId is invalid');
     const index = artists.findIndex((art) => art.id === artistId);
     if (index === -1) {
-      throw new NotFoundException('artist not found');
+      throw new NotFoundException('artist does not exist');
     }
     artists.splice(index, 1);
   }

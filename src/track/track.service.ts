@@ -16,7 +16,7 @@ export class TrackService {
   getTrack(trackId: string) {
     if (!validate(trackId)) throw new BadRequestException('trackId is invalid');
     const track = tracks.find((track) => track.id === trackId);
-    if (!track) throw new NotFoundException('track does not exists');
+    if (!track) throw new NotFoundException('track does not exist');
     return track;
   }
   createTrack(newTrack: CreateTrackDto) {
@@ -26,7 +26,7 @@ export class TrackService {
       !newTrack.duration ||
       !newTrack.name
     )
-      throw new BadRequestException('request does not contain all fields');
+      throw new BadRequestException('invalid dto');
     const track = {
       ...newTrack,
       id: v4(),

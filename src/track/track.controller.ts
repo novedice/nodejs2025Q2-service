@@ -25,6 +25,7 @@ export class TrackController {
     return this.trackService.getTrack(id);
   }
   @Post()
+  @HttpCode(201)
   createTrack(@Body() newTrack: CreateTrackDto) {
     return this.trackService.createTrack(newTrack);
   }
@@ -35,6 +36,6 @@ export class TrackController {
   @Delete(':id')
   @HttpCode(204)
   deleteTrack(@Param('id') id: string) {
-    return this.trackService.deleteTrack(id);
+    this.trackService.deleteTrack(id);
   }
 }

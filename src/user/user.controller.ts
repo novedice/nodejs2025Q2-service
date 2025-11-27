@@ -28,6 +28,7 @@ export class UsersController {
   }
 
   @Post()
+  @HttpCode(201)
   async createUser(@Body() createUserDto: CreateUserDto) {
     return this.userService.createUser(createUserDto);
   }
@@ -43,6 +44,6 @@ export class UsersController {
   @Delete(':id')
   @HttpCode(204)
   async deleteUser(@Param('id') id: string) {
-    return this.userService.deleteUser(id);
+    this.userService.deleteUser(id);
   }
 }

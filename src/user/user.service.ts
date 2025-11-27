@@ -22,11 +22,9 @@ export class UserService {
     }));
   }
   getUser(id: string) {
-    if (!validate(id)) throw new BadRequestException('user id is invalid');
-
+    if (!validate(id)) throw new BadRequestException('userId is invalid');
     const user = users.find((u) => u.id === id);
     if (!user) throw new NotFoundException('user does not exist');
-
     return {
       login: user.login,
       createdAt: user.createdAt,
@@ -60,7 +58,10 @@ export class UserService {
   }
   updatePassword(id: string, updPasswordDto: UpdatePasswordDto) {
     if (!validate(id)) {
-      throw new BadRequestException('user id is invalid');
+      throw new BadRequestException('userId is invalid');
+    }
+    if (!updPasswordDto.oldPassword || !updPasswordDto.oldPassword) {
+      throw new BadRequestException('invalid dto');
     }
     const index = users.findIndex((user) => user.id === id);
     if (index === -1) throw new NotFoundException('user does not exists');
@@ -83,7 +84,7 @@ export class UserService {
   }
   deleteUser(id: string) {
     if (!validate(id)) {
-      throw new BadRequestException('user id is invalid');
+      throw new BadRequestException('userId is invalid');
     }
     const index = users.findIndex((u) => u.id === id) ?? null;
     if (index === -1) throw new NotFoundException('user does not exists');

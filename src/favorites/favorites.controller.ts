@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Post } from '@nestjs/common';
+import { Controller, Delete, Get, HttpCode, Param, Post } from '@nestjs/common';
 import { FavoritesService } from './favorites.service';
 
 @Controller('favs')
@@ -9,24 +9,18 @@ export class FavoritesController {
   getFavorites() {
     return this.favoritesService.getFavorites();
   }
-  @Post()
-  postFavTrack() {
-    return this.favoritesService.postFavTrack();
+  @Post(':type/:id')
+  @HttpCode(201)
+  addToFavotite(@Param('type') type: string, @Param('id') id: string) {
+    if (type === 'track') return this.favoritesService.addFavTrack(id);
+    if (type === 'album') return this.favoritesService.addFavAlbum(id);
+    if (type === 'artist') return this.favoritesService.addFavArtist(id);
   }
-  postFavAlbum() {
-    return this.favoritesService.postFavAlbum();
-  }
-  postFavArtist() {
-    return this.favoritesService.postFavArtist();
-  }
-  @Delete()
-  deleteFavTrack() {
-    return this.favoritesService.deleteFavTrack();
-  }
-  deleteFavAlbum() {
-    return this.favoritesService.deleteFavAlbum();
-  }
-  deleteFavArtist() {
-    return this.favoritesService.deleteFavArtist();
+  @Delete(':type/:id')
+  @HttpCode(204)
+  deleteFromFav(@Param('type') type: string, @Param('id') id: string) {
+    if (type === 'track') return this.favoritesService.deleteFavTrack(id);
+    if (type === 'album') return this.favoritesService.deleteFavAlbum(id);
+    if (type === 'artist') return this.favoritesService.deleteFavArtist(id);
   }
 }

@@ -60,9 +60,8 @@ export class UserService {
     if (!validate(id)) {
       throw new BadRequestException('userId is invalid');
     }
-    if (!updPasswordDto.oldPassword || !updPasswordDto.oldPassword) {
+    if (!updPasswordDto.oldPassword || !updPasswordDto.oldPassword)
       throw new BadRequestException('invalid dto');
-    }
     const index = users.findIndex((user) => user.id === id);
     if (index === -1) throw new NotFoundException('user does not exists');
     if (users[index].password !== updPasswordDto.oldPassword)

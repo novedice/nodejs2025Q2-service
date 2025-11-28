@@ -15,7 +15,8 @@ export class TrackService {
     return tracks;
   }
   getTrack(trackId: string) {
-    if (!validate(trackId)) throw new BadRequestException('trackId is invalid');
+    if (!validate(trackId))
+      throw new BadRequestException('trackId is invalid (not uuid)');
     const track = tracks.find((track) => track.id === trackId);
     if (!track) throw new NotFoundException('track does not exist');
     return track;
@@ -32,7 +33,7 @@ export class TrackService {
   }
   updateTrack(trackId: string, updTrack: UpdateTrackDto) {
     if (!validate(trackId))
-      throw new BadRequestException('trackId is not valid');
+      throw new BadRequestException('trackId is invalid (not uuid)');
     if (
       (updTrack.artistId && !validate(updTrack.artistId)) ||
       (updTrack.albumId && !validate(updTrack.albumId))
@@ -52,7 +53,7 @@ export class TrackService {
   }
   deleteTrack(trackId: string) {
     if (!validate(trackId))
-      throw new BadRequestException('trackId is not valid');
+      throw new BadRequestException('trackId is invalid (not uuid)');
     const index = tracks.findIndex((track) => track.id === trackId);
     if (index === -1) throw new NotFoundException('track does not exist');
     tracks.splice(index, 1);

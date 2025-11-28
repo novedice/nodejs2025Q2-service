@@ -39,6 +39,6 @@ export class ArtistController {
   @Delete(':id')
   @HttpCode(204)
   async deleteArtist(@Param('id') id: string) {
-    this.artistService.deleteArtist(id);
+    return this.artistService.deleteArtist(id);
   }
 }

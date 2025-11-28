@@ -1,4 +1,12 @@
-import { Controller, Delete, Get, HttpCode, Param, Post } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { FavoritesService } from './favorites.service';
 
 @Controller('favs')
@@ -11,10 +19,11 @@ export class FavoritesController {
   }
   @Post(':type/:id')
   @HttpCode(201)
-  addToFavotite(@Param('type') type: string, @Param('id') id: string) {
+  addToFavorite(@Param('type') type: string, @Param('id') id: string) {
     if (type === 'track') return this.favoritesService.addFavTrack(id);
     if (type === 'album') return this.favoritesService.addFavAlbum(id);
     if (type === 'artist') return this.favoritesService.addFavArtist(id);
+    throw new BadRequestException('invalide path');
   }
   @Delete(':type/:id')
   @HttpCode(204)
@@ -22,5 +31,6 @@ export class FavoritesController {
     if (type === 'track') return this.favoritesService.deleteFavTrack(id);
     if (type === 'album') return this.favoritesService.deleteFavAlbum(id);
     if (type === 'artist') return this.favoritesService.deleteFavArtist(id);
+    throw new BadRequestException('invalide path');
   }
 }

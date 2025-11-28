@@ -20,7 +20,7 @@ export class ArtistService {
     if (!validate(artistId))
       throw new BadRequestException('artistId is invalid');
     const index = artists.findIndex((art) => art.id === artistId);
-    if (index === -1) throw new NotFoundException('artist does not exists');
+    if (index === -1) throw new NotFoundException('artist does not exist');
     return artists[index];
   }
   createArtist(newArtist: CreateArtistDto) {
@@ -35,7 +35,7 @@ export class ArtistService {
   }
   updateArtist(artistId: string, updArtist: UpdateArtistDto) {
     if (!validate(artistId))
-      throw new BadRequestException('artistId is invalid');
+      throw new BadRequestException('artistId is invalid (not uuid)');
     if (
       !updArtist ||
       (updArtist.grammy === undefined && updArtist.name === undefined) ||
@@ -57,7 +57,7 @@ export class ArtistService {
   }
   deleteArtist(artistId: string) {
     if (!validate(artistId))
-      throw new BadRequestException('artistId is invalid');
+      throw new BadRequestException('artistId is invalid (not uuid)');
     const index = artists.findIndex((art) => art.id === artistId);
     if (index === -1) {
       throw new NotFoundException('artist does not exist');

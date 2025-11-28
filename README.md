@@ -8,7 +8,13 @@
 ## Downloading
 
 ```
-git clone {repository URL}
+git clone https://github.com/novedice/nodejs2025Q2-service.git
+```
+
+## Changing branch
+
+```
+git branch dev
 ```
 
 ## Installing NPM modules

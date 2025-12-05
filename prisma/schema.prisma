@@ -17,9 +17,9 @@ model User {
   id          String   @id @default(uuid())
   login       String   @unique
   password    String
-  version     Int
+  version     Int      @default(1)
   createdAt   DateTime @default(now())
-  updatedAt   Int
+  updatedAt   DateTime @updatedAt
 
   favorites   Favorites?
 }
@@ -38,10 +38,10 @@ model Track {
   id          String  @id @default(uuid())
   name        String
   duration    Int
-  artistId    String?  // refers to Artist
-  artist      Artist? @relation(fields: [artistId], references: [id])
-  albumId     String? // refers to Album
-  album       Album?  @relation(fields: [albumId], references: [id])
+  artistId    String? 
+  artist      Artist? @relation(fields: [artistId], references: [id], onDelete: SetNull)
+  albumId     String?
+  album       Album?  @relation(fields: [albumId], references: [id], onDelete: SetNull)
   favorites   Favorites[]
 }
 
@@ -52,8 +52,8 @@ model Album {
 
   tracks      Track[]
 
-  artist      Artist? @relation(fields: [artistId], references: [id])
-  artistId    String?  // refers to Artist
+  artist      Artist? @relation(fields: [artistId], references: [id], onDelete: SetNull)
+  artistId    String?  
 
   favorites   Favorites[]
 }
@@ -62,7 +62,7 @@ model Favorites {
   id          String @id @default(uuid())
 
   userId      String @unique
-  user        User   @relation(fields: [userId], references: [id])
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   artists     Artist[]
   albums      Album[]

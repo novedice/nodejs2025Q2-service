@@ -12,7 +12,7 @@
 ## Downloading
 
 ```
-git clone {https://github.com/novedice/nodejs2025Q2-service.git}
+git clone https://github.com/novedice/nodejs2025Q2-service.git
 ```
 ## Changing branch
 

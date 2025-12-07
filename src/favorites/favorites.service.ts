@@ -4,7 +4,7 @@ import {
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import tracks from 'src/track/track.repository';
+// import tracks from 'src/track/track.repository';
 import { validate } from 'uuid';
 import {
   favsAlbumsIds,
@@ -13,35 +13,44 @@ import {
 } from './favorites.repository';
 import artists from 'src/artist/artist.repository';
 import albums from 'src/album/album.repository';
-import { FavoritesResponse } from './interfaces/favorites.interface';
+// import { FavoritesResponse } from './interfaces/favorites.interface';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class FavoritesService {
-  getFavorites() {
-    const fav: FavoritesResponse = {
-      artists: favsArtistsIds.map((artistId) =>
-        artists.find((artist) => artist.id === artistId),
-      ),
-      albums: favsAlbumsIds.map((albumId) =>
-        albums.find((album) => album.id === albumId),
-      ),
-      tracks: favsTracksIds.map((trackId) =>
-        tracks.find((track) => track.id === trackId),
-      ),
-    };
-    return fav;
+  constructor(private readonly prisma: PrismaService) {}
+  async getFavorites() {
+    // const fav: FavoritesResponse = {
+    //   artists: favsArtistsIds.map((artistId) =>
+    //     artists.find((artist) => artist.id === artistId),
+    //   ),
+    //   albums: favsAlbumsIds.map((albumId) =>
+    //     albums.find((album) => album.id === albumId),
+    //   ),
+    //   tracks: favsTracksIds.map((trackId) =>
+    //     tracks.find((track) => track.id === trackId),
+    //   ),
+    // };
+    // return fav;
+    return await this.prisma.favorites.findMany();
   }
-  addFavTrack(trackId: string) {
+  async addFavTrack(trackId: string) {
     if (!validate(trackId))
       throw new BadRequestException('trackId is invalid (not uuid)');
-    const index = tracks.findIndex((tr) => tr.id === trackId);
-    if (index === -1)
-      throw new UnprocessableEntityException('track does not exist');
-    if (favsTracksIds.findIndex((id) => id === trackId) === -1)
-      favsTracksIds.push(trackId);
+    // const index = tracks.findIndex((tr) => tr.id === trackId);
+    const track = await this.prisma.track.findUnique({
+      where: { id: trackId },
+    });
+    if (!track) throw new UnprocessableEntityException('track does not exist');
+    // if (favsTracksIds.findIndex((id) => id === trackId) === -1)
+    //   favsTracksIds.push(trackId);
+    await this.prisma.favorites.update({
+      data: track,
+      where: { id: trackId },
+    });
     return 'Track added to favorites';
   }
-  deleteFavTrack(trackId: string) {
+  async deleteFavTrack(trackId: string) {
     if (!validate(trackId))
       throw new BadRequestException('trackId is invalid (not uuid)');
     const index = favsTracksIds.findIndex((id) => id === trackId);

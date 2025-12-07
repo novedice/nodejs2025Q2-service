@@ -2,10 +2,7 @@ version: '3.9'
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: home-library
+    image: novedice/home-library:latest
     container_name: home-library-app
     ports: 
       - "4000:4000"
@@ -18,10 +15,7 @@ services:
     restart: unless-stopped
 
   db:
-    build: 
-      context: .
-      dockerfile: Dockerfile.db
-    image: database-postgres
+    image: novedice/database-postgres:latest
     container_name: database
     env_file:
       - .env
@@ -39,12 +33,7 @@ services:
   
 networks:
   app-network:
+    driver: bridge
 
 volumes:
   postgres_data:
-
-
-
-
-
-

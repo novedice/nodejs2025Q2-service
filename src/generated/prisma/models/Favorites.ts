@@ -26,34 +26,28 @@ export type AggregateFavorites = {
 
 export type FavoritesMinAggregateOutputType = {
   id: string | null
-  userId: string | null
 }
 
 export type FavoritesMaxAggregateOutputType = {
   id: string | null
-  userId: string | null
 }
 
 export type FavoritesCountAggregateOutputType = {
   id: number
-  userId: number
   _all: number
 }
 
 
 export type FavoritesMinAggregateInputType = {
   id?: true
-  userId?: true
 }
 
 export type FavoritesMaxAggregateInputType = {
   id?: true
-  userId?: true
 }
 
 export type FavoritesCountAggregateInputType = {
   id?: true
-  userId?: true
   _all?: true
 }
 
@@ -131,7 +125,6 @@ export type FavoritesGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type FavoritesGroupByOutputType = {
   id: string
-  userId: string
   _count: FavoritesCountAggregateOutputType | null
   _min: FavoritesMinAggregateOutputType | null
   _max: FavoritesMaxAggregateOutputType | null
@@ -157,8 +150,6 @@ export type FavoritesWhereInput = {
   OR?: Prisma.FavoritesWhereInput[]
   NOT?: Prisma.FavoritesWhereInput | Prisma.FavoritesWhereInput[]
   id?: Prisma.StringFilter<"Favorites"> | string
-  userId?: Prisma.StringFilter<"Favorites"> | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   artists?: Prisma.ArtistListRelationFilter
   albums?: Prisma.AlbumListRelationFilter
   tracks?: Prisma.TrackListRelationFilter
@@ -166,8 +157,6 @@ export type FavoritesWhereInput = {
 
 export type FavoritesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
-  user?: Prisma.UserOrderByWithRelationInput
   artists?: Prisma.ArtistOrderByRelationAggregateInput
   albums?: Prisma.AlbumOrderByRelationAggregateInput
   tracks?: Prisma.TrackOrderByRelationAggregateInput
@@ -175,19 +164,16 @@ export type FavoritesOrderByWithRelationInput = {
 
 export type FavoritesWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  userId?: string
   AND?: Prisma.FavoritesWhereInput | Prisma.FavoritesWhereInput[]
   OR?: Prisma.FavoritesWhereInput[]
   NOT?: Prisma.FavoritesWhereInput | Prisma.FavoritesWhereInput[]
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   artists?: Prisma.ArtistListRelationFilter
   albums?: Prisma.AlbumListRelationFilter
   tracks?: Prisma.TrackListRelationFilter
-}, "id" | "userId">
+}, "id">
 
 export type FavoritesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   _count?: Prisma.FavoritesCountOrderByAggregateInput
   _max?: Prisma.FavoritesMaxOrderByAggregateInput
   _min?: Prisma.FavoritesMinOrderByAggregateInput
@@ -198,12 +184,10 @@ export type FavoritesScalarWhereWithAggregatesInput = {
   OR?: Prisma.FavoritesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.FavoritesScalarWhereWithAggregatesInput | Prisma.FavoritesScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Favorites"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"Favorites"> | string
 }
 
 export type FavoritesCreateInput = {
   id?: string
-  user: Prisma.UserCreateNestedOneWithoutFavoritesInput
   artists?: Prisma.ArtistCreateNestedManyWithoutFavoritesInput
   albums?: Prisma.AlbumCreateNestedManyWithoutFavoritesInput
   tracks?: Prisma.TrackCreateNestedManyWithoutFavoritesInput
@@ -211,7 +195,6 @@ export type FavoritesCreateInput = {
 
 export type FavoritesUncheckedCreateInput = {
   id?: string
-  userId: string
   artists?: Prisma.ArtistUncheckedCreateNestedManyWithoutFavoritesInput
   albums?: Prisma.AlbumUncheckedCreateNestedManyWithoutFavoritesInput
   tracks?: Prisma.TrackUncheckedCreateNestedManyWithoutFavoritesInput
@@ -219,7 +202,6 @@ export type FavoritesUncheckedCreateInput = {
 
 export type FavoritesUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  user?: Prisma.UserUpdateOneRequiredWithoutFavoritesNestedInput
   artists?: Prisma.ArtistUpdateManyWithoutFavoritesNestedInput
   albums?: Prisma.AlbumUpdateManyWithoutFavoritesNestedInput
   tracks?: Prisma.TrackUpdateManyWithoutFavoritesNestedInput
@@ -227,7 +209,6 @@ export type FavoritesUpdateInput = {
 
 export type FavoritesUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   artists?: Prisma.ArtistUncheckedUpdateManyWithoutFavoritesNestedInput
   albums?: Prisma.AlbumUncheckedUpdateManyWithoutFavoritesNestedInput
   tracks?: Prisma.TrackUncheckedUpdateManyWithoutFavoritesNestedInput
@@ -235,7 +216,6 @@ export type FavoritesUncheckedUpdateInput = {
 
 export type FavoritesCreateManyInput = {
   id?: string
-  userId: string
 }
 
 export type FavoritesUpdateManyMutationInput = {
@@ -244,12 +224,6 @@ export type FavoritesUpdateManyMutationInput = {
 
 export type FavoritesUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
-export type FavoritesNullableScalarRelationFilter = {
-  is?: Prisma.FavoritesWhereInput | null
-  isNot?: Prisma.FavoritesWhereInput | null
 }
 
 export type FavoritesListRelationFilter = {
@@ -264,49 +238,14 @@ export type FavoritesOrderByRelationAggregateInput = {
 
 export type FavoritesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
 }
 
 export type FavoritesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
 }
 
 export type FavoritesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
-}
-
-export type FavoritesCreateNestedOneWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.FavoritesCreateWithoutUserInput, Prisma.FavoritesUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.FavoritesCreateOrConnectWithoutUserInput
-  connect?: Prisma.FavoritesWhereUniqueInput
-}
-
-export type FavoritesUncheckedCreateNestedOneWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.FavoritesCreateWithoutUserInput, Prisma.FavoritesUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.FavoritesCreateOrConnectWithoutUserInput
-  connect?: Prisma.FavoritesWhereUniqueInput
-}
-
-export type FavoritesUpdateOneWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.FavoritesCreateWithoutUserInput, Prisma.FavoritesUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.FavoritesCreateOrConnectWithoutUserInput
-  upsert?: Prisma.FavoritesUpsertWithoutUserInput
-  disconnect?: Prisma.FavoritesWhereInput | boolean
-  delete?: Prisma.FavoritesWhereInput | boolean
-  connect?: Prisma.FavoritesWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.FavoritesUpdateToOneWithWhereWithoutUserInput, Prisma.FavoritesUpdateWithoutUserInput>, Prisma.FavoritesUncheckedUpdateWithoutUserInput>
-}
-
-export type FavoritesUncheckedUpdateOneWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.FavoritesCreateWithoutUserInput, Prisma.FavoritesUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.FavoritesCreateOrConnectWithoutUserInput
-  upsert?: Prisma.FavoritesUpsertWithoutUserInput
-  disconnect?: Prisma.FavoritesWhereInput | boolean
-  delete?: Prisma.FavoritesWhereInput | boolean
-  connect?: Prisma.FavoritesWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.FavoritesUpdateToOneWithWhereWithoutUserInput, Prisma.FavoritesUpdateWithoutUserInput>, Prisma.FavoritesUncheckedUpdateWithoutUserInput>
 }
 
 export type FavoritesCreateNestedManyWithoutArtistsInput = {
@@ -423,60 +362,14 @@ export type FavoritesUncheckedUpdateManyWithoutAlbumsNestedInput = {
   deleteMany?: Prisma.FavoritesScalarWhereInput | Prisma.FavoritesScalarWhereInput[]
 }
 
-export type FavoritesCreateWithoutUserInput = {
-  id?: string
-  artists?: Prisma.ArtistCreateNestedManyWithoutFavoritesInput
-  albums?: Prisma.AlbumCreateNestedManyWithoutFavoritesInput
-  tracks?: Prisma.TrackCreateNestedManyWithoutFavoritesInput
-}
-
-export type FavoritesUncheckedCreateWithoutUserInput = {
-  id?: string
-  artists?: Prisma.ArtistUncheckedCreateNestedManyWithoutFavoritesInput
-  albums?: Prisma.AlbumUncheckedCreateNestedManyWithoutFavoritesInput
-  tracks?: Prisma.TrackUncheckedCreateNestedManyWithoutFavoritesInput
-}
-
-export type FavoritesCreateOrConnectWithoutUserInput = {
-  where: Prisma.FavoritesWhereUniqueInput
-  create: Prisma.XOR<Prisma.FavoritesCreateWithoutUserInput, Prisma.FavoritesUncheckedCreateWithoutUserInput>
-}
-
-export type FavoritesUpsertWithoutUserInput = {
-  update: Prisma.XOR<Prisma.FavoritesUpdateWithoutUserInput, Prisma.FavoritesUncheckedUpdateWithoutUserInput>
-  create: Prisma.XOR<Prisma.FavoritesCreateWithoutUserInput, Prisma.FavoritesUncheckedCreateWithoutUserInput>
-  where?: Prisma.FavoritesWhereInput
-}
-
-export type FavoritesUpdateToOneWithWhereWithoutUserInput = {
-  where?: Prisma.FavoritesWhereInput
-  data: Prisma.XOR<Prisma.FavoritesUpdateWithoutUserInput, Prisma.FavoritesUncheckedUpdateWithoutUserInput>
-}
-
-export type FavoritesUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  artists?: Prisma.ArtistUpdateManyWithoutFavoritesNestedInput
-  albums?: Prisma.AlbumUpdateManyWithoutFavoritesNestedInput
-  tracks?: Prisma.TrackUpdateManyWithoutFavoritesNestedInput
-}
-
-export type FavoritesUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  artists?: Prisma.ArtistUncheckedUpdateManyWithoutFavoritesNestedInput
-  albums?: Prisma.AlbumUncheckedUpdateManyWithoutFavoritesNestedInput
-  tracks?: Prisma.TrackUncheckedUpdateManyWithoutFavoritesNestedInput
-}
-
 export type FavoritesCreateWithoutArtistsInput = {
   id?: string
-  user: Prisma.UserCreateNestedOneWithoutFavoritesInput
   albums?: Prisma.AlbumCreateNestedManyWithoutFavoritesInput
   tracks?: Prisma.TrackCreateNestedManyWithoutFavoritesInput
 }
 
 export type FavoritesUncheckedCreateWithoutArtistsInput = {
   id?: string
-  userId: string
   albums?: Prisma.AlbumUncheckedCreateNestedManyWithoutFavoritesInput
   tracks?: Prisma.TrackUncheckedCreateNestedManyWithoutFavoritesInput
 }
@@ -507,19 +400,16 @@ export type FavoritesScalarWhereInput = {
   OR?: Prisma.FavoritesScalarWhereInput[]
   NOT?: Prisma.FavoritesScalarWhereInput | Prisma.FavoritesScalarWhereInput[]
   id?: Prisma.StringFilter<"Favorites"> | string
-  userId?: Prisma.StringFilter<"Favorites"> | string
 }
 
 export type FavoritesCreateWithoutTracksInput = {
   id?: string
-  user: Prisma.UserCreateNestedOneWithoutFavoritesInput
   artists?: Prisma.ArtistCreateNestedManyWithoutFavoritesInput
   albums?: Prisma.AlbumCreateNestedManyWithoutFavoritesInput
 }
 
 export type FavoritesUncheckedCreateWithoutTracksInput = {
   id?: string
-  userId: string
   artists?: Prisma.ArtistUncheckedCreateNestedManyWithoutFavoritesInput
   albums?: Prisma.AlbumUncheckedCreateNestedManyWithoutFavoritesInput
 }
@@ -547,14 +437,12 @@ export type FavoritesUpdateManyWithWhereWithoutTracksInput = {
 
 export type FavoritesCreateWithoutAlbumsInput = {
   id?: string
-  user: Prisma.UserCreateNestedOneWithoutFavoritesInput
   artists?: Prisma.ArtistCreateNestedManyWithoutFavoritesInput
   tracks?: Prisma.TrackCreateNestedManyWithoutFavoritesInput
 }
 
 export type FavoritesUncheckedCreateWithoutAlbumsInput = {
   id?: string
-  userId: string
   artists?: Prisma.ArtistUncheckedCreateNestedManyWithoutFavoritesInput
   tracks?: Prisma.TrackUncheckedCreateNestedManyWithoutFavoritesInput
 }
@@ -582,59 +470,50 @@ export type FavoritesUpdateManyWithWhereWithoutAlbumsInput = {
 
 export type FavoritesUpdateWithoutArtistsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  user?: Prisma.UserUpdateOneRequiredWithoutFavoritesNestedInput
   albums?: Prisma.AlbumUpdateManyWithoutFavoritesNestedInput
   tracks?: Prisma.TrackUpdateManyWithoutFavoritesNestedInput
 }
 
 export type FavoritesUncheckedUpdateWithoutArtistsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   albums?: Prisma.AlbumUncheckedUpdateManyWithoutFavoritesNestedInput
   tracks?: Prisma.TrackUncheckedUpdateManyWithoutFavoritesNestedInput
 }
 
 export type FavoritesUncheckedUpdateManyWithoutArtistsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FavoritesUpdateWithoutTracksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  user?: Prisma.UserUpdateOneRequiredWithoutFavoritesNestedInput
   artists?: Prisma.ArtistUpdateManyWithoutFavoritesNestedInput
   albums?: Prisma.AlbumUpdateManyWithoutFavoritesNestedInput
 }
 
 export type FavoritesUncheckedUpdateWithoutTracksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   artists?: Prisma.ArtistUncheckedUpdateManyWithoutFavoritesNestedInput
   albums?: Prisma.AlbumUncheckedUpdateManyWithoutFavoritesNestedInput
 }
 
 export type FavoritesUncheckedUpdateManyWithoutTracksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FavoritesUpdateWithoutAlbumsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  user?: Prisma.UserUpdateOneRequiredWithoutFavoritesNestedInput
   artists?: Prisma.ArtistUpdateManyWithoutFavoritesNestedInput
   tracks?: Prisma.TrackUpdateManyWithoutFavoritesNestedInput
 }
 
 export type FavoritesUncheckedUpdateWithoutAlbumsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   artists?: Prisma.ArtistUncheckedUpdateManyWithoutFavoritesNestedInput
   tracks?: Prisma.TrackUncheckedUpdateManyWithoutFavoritesNestedInput
 }
 
 export type FavoritesUncheckedUpdateManyWithoutAlbumsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -688,8 +567,6 @@ export type FavoritesCountOutputTypeCountTracksArgs<ExtArgs extends runtime.Type
 
 export type FavoritesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  userId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   artists?: boolean | Prisma.Favorites$artistsArgs<ExtArgs>
   albums?: boolean | Prisma.Favorites$albumsArgs<ExtArgs>
   tracks?: boolean | Prisma.Favorites$tracksArgs<ExtArgs>
@@ -698,47 +575,35 @@ export type FavoritesSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type FavoritesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  userId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["favorites"]>
 
 export type FavoritesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  userId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["favorites"]>
 
 export type FavoritesSelectScalar = {
   id?: boolean
-  userId?: boolean
 }
 
-export type FavoritesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId", ExtArgs["result"]["favorites"]>
+export type FavoritesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id", ExtArgs["result"]["favorites"]>
 export type FavoritesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   artists?: boolean | Prisma.Favorites$artistsArgs<ExtArgs>
   albums?: boolean | Prisma.Favorites$albumsArgs<ExtArgs>
   tracks?: boolean | Prisma.Favorites$tracksArgs<ExtArgs>
   _count?: boolean | Prisma.FavoritesCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type FavoritesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-}
-export type FavoritesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-}
+export type FavoritesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type FavoritesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $FavoritesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Favorites"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
     artists: Prisma.$ArtistPayload<ExtArgs>[]
     albums: Prisma.$AlbumPayload<ExtArgs>[]
     tracks: Prisma.$TrackPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    userId: string
   }, ExtArgs["result"]["favorites"]>
   composites: {}
 }
@@ -1133,7 +998,6 @@ readonly fields: FavoritesFieldRefs;
  */
 export interface Prisma__FavoritesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   artists<T extends Prisma.Favorites$artistsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Favorites$artistsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ArtistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   albums<T extends Prisma.Favorites$albumsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Favorites$albumsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AlbumPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tracks<T extends Prisma.Favorites$tracksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Favorites$tracksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1167,7 +1031,6 @@ export interface Prisma__FavoritesClient<T, Null = never, ExtArgs extends runtim
  */
 export interface FavoritesFieldRefs {
   readonly id: Prisma.FieldRef<"Favorites", 'String'>
-  readonly userId: Prisma.FieldRef<"Favorites", 'String'>
 }
     
 
@@ -1386,7 +1249,7 @@ export type FavoritesCreateArgs<ExtArgs extends runtime.Types.Extensions.Interna
   /**
    * The data needed to create a Favorites.
    */
-  data: Prisma.XOR<Prisma.FavoritesCreateInput, Prisma.FavoritesUncheckedCreateInput>
+  data?: Prisma.XOR<Prisma.FavoritesCreateInput, Prisma.FavoritesUncheckedCreateInput>
 }
 
 /**
@@ -1417,10 +1280,6 @@ export type FavoritesCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    */
   data: Prisma.FavoritesCreateManyInput | Prisma.FavoritesCreateManyInput[]
   skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.FavoritesIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1491,10 +1350,6 @@ export type FavoritesUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    * Limit how many Favorites to update.
    */
   limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.FavoritesIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

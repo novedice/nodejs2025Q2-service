@@ -117,8 +117,7 @@ export type AlbumScalarFieldEnum = (typeof AlbumScalarFieldEnum)[keyof typeof Al
 
 
 export const FavoritesScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId'
+  id: 'id'
 } as const
 
 export type FavoritesScalarFieldEnum = (typeof FavoritesScalarFieldEnum)[keyof typeof FavoritesScalarFieldEnum]

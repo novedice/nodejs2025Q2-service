@@ -5,7 +5,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 // import tracks from 'src/track/track.repository';
-import { validate } from 'uuid';
+import { v4, validate } from 'uuid';
 import {
   favsAlbumsIds,
   favsArtistsIds,
@@ -32,7 +32,32 @@ export class FavoritesService {
     //   ),
     // };
     // return fav;
-    return await this.prisma.favorites.findMany();
+    const favorites = await this.prisma.favorites.findFirst({
+      include: {
+        tracks: true,
+        albums: true,
+        artists: true,
+      },
+    });
+    if (!favorites)
+      return await this.prisma.favorites.create({
+        data: {
+          id: v4(),
+        },
+        include: {
+          artists: true,
+          albums: true,
+          tracks: true,
+        },
+      });
+    console.log('fields fav:', favorites);
+    return await this.prisma.favorites.findMany({
+      select: {
+        albums: true,
+        artists: true,
+        tracks: true,
+      },
+    });
   }
   async addFavTrack(trackId: string) {
     if (!validate(trackId))

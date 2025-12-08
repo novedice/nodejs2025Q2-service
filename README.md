@@ -32,12 +32,6 @@ mv .env.example .env
 docker-compose up
 ```
 
-- If you want to rebuild the images locally:
-```
-docker-compose up --build
-```
-
-
 *Docker Configuration*  
 
 - Application image: novedice/home-library:latest

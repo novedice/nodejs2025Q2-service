@@ -76,6 +76,26 @@ npm install
 npm run test
 ```
 
+## 6. Docker Image Vulnerability Scan
+
+You can check your Docker images for known security vulnerabilities using [Trivy](https://github.com/aquasecurity/trivy).
+
+### 6.1. Install Trivy
+
+**macOS (Homebrew):**
+```
+brew install trivy
+```
+**Linux (Debian/Ubuntu):**
+```
+sudo apt install trivy
+```
+### 6.2. Scan Docker Images
+```
+npm run scan:vulnerabilities
+```
+  
+
 ## API Endpoints
 
 ### Users

@@ -8,6 +8,8 @@ import { AlbumModule } from './album/album.module';
 import { ArtistModule } from './artist/artist.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from 'auth/auth.module';
+// import { APP_GUARD } from '@nestjs/core';
+// import { AuthGuard } from 'auth/auth.guard';
 
 @Module({
   imports: [
@@ -19,7 +21,11 @@ import { AuthModule } from 'auth/auth.module';
     PrismaModule,
     AuthModule,
   ],
-  // controllers: [AppController],
-  // providers: [AppService],
+  // providers: [
+  //   {
+  //     provide: APP_GUARD,
+  //     useClass: AuthGuard,
+  //   },
+  // ],
 })
 export class AppModule {}

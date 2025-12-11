@@ -8,7 +8,6 @@ import { LoginDto, SignupDto } from './dto/auth.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
-// import { User } from 'src/user/interfaces/user.interface';
 
 export interface decodedToken {
   userId: string;
@@ -63,14 +62,10 @@ export class AuthService {
       where: { login: loginDto.login },
     });
     if (!user) throw new ForbiddenException('user not found');
-    console.log(user);
-    // for (let i = 0; i < users.length; i++) {
     const compare = await bcrypt.compare(loginDto.password, user.password);
     if (compare) {
-      console.log('tokens:', this.generateToken(user));
       return this.generateToken(user);
     }
-    // }
     throw new ForbiddenException('password does not match');
   }
 
@@ -81,24 +76,15 @@ export class AuthService {
       const decodedToken = jwt.decode(refreshToken) as unknown as decodedToken;
       console.log('decoded:', decodedToken);
       if (new Date(decodedToken.exp * 1000) < new Date()) {
-        console.log(
-          'date now:',
-          Date.now(),
-          new Date(),
-          new Date(decodedToken.exp),
-          new Date(decodedToken.iat),
-        );
         throw new ForbiddenException('token is expired');
       }
       const payload = {
         userId: decodedToken.userId,
         login: decodedToken.login,
       };
-      console.log('payload: ', payload);
       const accessToken = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
         expiresIn: '1h',
       });
-      console.log('accessToken:', accessToken);
       const refreshedToken = jwt.sign(
         payload,
         process.env.JWT_SECRET_REFRESH_KEY,

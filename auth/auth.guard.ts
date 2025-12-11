@@ -18,11 +18,14 @@ export class AuthGuard implements CanActivate {
   }
 
   private validateRequest(req: Request) {
-    console.log('req url', req.url);
-    if (req.url.startsWith('/auth')) {
+    if (
+      req.url.startsWith('/auth') ||
+      req.url === '/' ||
+      req.url === '/doc' ||
+      req.url === '/doc#'
+    ) {
       return true;
     }
-    console.log('request:', req.body, req.headers);
     const authHead = req.headers['authorization'];
     if (!authHead)
       throw new UnauthorizedException(
@@ -40,7 +43,6 @@ export class AuthGuard implements CanActivate {
         token,
         process.env.JWT_SECRET_KEY,
       ) as unknown as decodedToken;
-      console.log('verification:', verification);
       if (verification.exp * 1000 < Date.now())
         throw new UnauthorizedException('Token is expired');
       return true;
@@ -48,5 +50,4 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException('JWT token is invalid');
     }
   }
-  // }
 }

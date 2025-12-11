@@ -7,6 +7,10 @@ import { FavoritesModule } from './favorites/favorites.module';
 import { AlbumModule } from './album/album.module';
 import { ArtistModule } from './artist/artist.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { AuthModule } from 'auth/auth.module';
+import { LoggingModule } from './logging/logging.module';
+// import { APP_GUARD } from '@nestjs/core';
+// import { AuthGuard } from 'auth/auth.guard';
 
 @Module({
   imports: [
@@ -16,8 +20,8 @@ import { PrismaModule } from './prisma/prisma.module';
     AlbumModule,
     ArtistModule,
     PrismaModule,
+    AuthModule,
+    LoggingModule,
   ],
-  // controllers: [AppController],
-  // providers: [AppService],
 })
 export class AppModule {}

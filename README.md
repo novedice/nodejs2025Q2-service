@@ -44,18 +44,25 @@ docker-compose up
 
 - Containers automatically restart if they crash (restart: unless-stopped).
 
-### 4. Verify containers are running*  
+### 4.1 Verify containers are running*  
 ```
 docker ps
 ```
-  
+
 home-library-app — Application container
 
 database — PostgreSQL container
   
+  
+### 4.2 Apply database migrations
 
+apply Prisma migrations to create the necessary tables:
+```
+docker exec -it home-library-app npx prisma migrate deploy
+```
+  
 After starting the app on port (4000 as default)
-The app will be available at: http://localhost:4000
+The app will be available at: http://localhost:4000  *The documentation does not work, so it will be "statusCode":404 NotFoundError. So please use endpoints which you can find below*
 
 ### 5. Testing
 

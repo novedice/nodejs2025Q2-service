@@ -20,9 +20,8 @@ export class AuthGuard implements CanActivate {
   private validateRequest(req: Request) {
     if (
       req.url.startsWith('/auth') ||
-      req.url === '/' ||
       req.url === '/doc' ||
-      req.url === '/doc#'
+      req.url.startsWith('doc#')
     ) {
       return true;
     }

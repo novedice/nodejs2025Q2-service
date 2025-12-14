@@ -1,12 +1,15 @@
 export const incrementFilename = (filename: string) => {
   const [fName, ext] = filename.split('.');
-  const match = fName.match(/(\d+)$/);
-
-  if (match) {
-    const num = Number(match[1]) + 1;
-    const base = fName.replace(/\d+$/, '');
-    return `${base}${num}.${ext}`;
+  const numbers = '0123456789';
+  let end = '';
+  let letterName = '';
+  for (let i = 0; i < fName.length; i++) {
+    if (numbers.includes(fName[i])) {
+      end = end + fName[i];
+    } else {
+      letterName = letterName + fName[i];
+    }
   }
-
-  return `${fName}1.${ext}`;
+  const res = `${letterName}${+end + 1}.${ext}`;
+  return res;
 };

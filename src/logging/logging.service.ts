@@ -1,14 +1,15 @@
 import { Injectable, LoggerService } from '@nestjs/common';
-// import { PathLike } from 'fs';
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
-// import { incrementFilename } from 'src/utils/incrementFilename';
+import { incrementFilename } from 'src/utils/incrementFilename';
 
 @Injectable()
 export class LoggingService implements LoggerService {
-  private loggingFileInit = 'applogs.txt';
-  private loggingFile = this.loggingFileInit;
-  private logIndex = 0;
+  constructor() {
+    this.initLoggingFile();
+  }
+
+  private loggingFile = 'applogs.txt';
   private logLevel = process.env.LOG_LEVEL ?? 'log';
 
   async log(message: string) {
@@ -43,7 +44,6 @@ export class LoggingService implements LoggerService {
   }
 
   private async writeLog(message: string) {
-    await fs.mkdir(path.resolve('logs'), { recursive: true });
     await fs.appendFile(
       path.resolve('logs', this.loggingFile),
       message,
@@ -51,17 +51,29 @@ export class LoggingService implements LoggerService {
     );
     try {
       const stat = await fs.stat(path.resolve('logs', this.loggingFile));
-      if (stat.size / 1024 > Number(process.env.FILE_SIZE))
+      if (stat.size / 1024 > Number(process.env.FILE_SIZE)) {
         await this.fileRotation();
+      }
     } catch {}
-    // await this.fileRotation(path.resolve('logs', this.loggingFile));
   }
 
   private async fileRotation() {
-    this.logIndex += 1;
-    const [name, ext] = this.loggingFileInit.split('.');
-    this.loggingFile = `${name}${this.logIndex}.${ext}`;
-    // console.log('stat:', size);
-    // this.loggingFile = incrementFilename(this.loggingFile);
+    this.loggingFile = incrementFilename(this.loggingFile);
+    fs.appendFile(path.resolve('logs', this.loggingFile), '', 'utf8');
+  }
+
+  private async initLoggingFile() {
+    await fs.mkdir(path.resolve('logs'), { recursive: true });
+
+    const files = await fs.readdir(path.resolve('logs'));
+
+    const logFiles = files.sort((a, b) => {
+      const na = Number(a.match(/\d+/)?.[0] ?? 0);
+      const nb = Number(b.match(/\d+/)?.[0] ?? 0);
+      return na - nb;
+    });
+
+    this.loggingFile =
+      logFiles.length > 0 ? logFiles[logFiles.length - 1] : 'applogs.txt';
   }
 }

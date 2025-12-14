@@ -30,29 +30,3 @@ ${new Date().toISOString()} LOG Response ${res.statusCode} ${baseUrl}`);
     next();
   }
 }
-
-// log
-
-// url
-
-// status
-
-// method
-
-// debug
-
-// body
-
-// query
-
-// промежуточные значения
-
-// error
-
-// stack trace
-
-// exception name
-
-// fatal
-
-// всё + process info

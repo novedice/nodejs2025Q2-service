@@ -13,18 +13,28 @@ export class ExceptionsFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const res = ctx.getResponse();
     const req = ctx.getRequest();
-    const status = exception.getStatus();
-    const message = exception.message;
     const date = new Date().toISOString();
 
-    if (exception instanceof HttpException) {
-      this.loggingService.error(
-        `${date} ${req.method} ${req.url} → ${status} | ${exception.message}`,
-      );
-    }
+    let status = 500;
+    let message = 'Internal server error';
 
-    if (!(exception instanceof HttpException)) {
-      this.loggingService.fatal((exception as Error).stack ?? '');
+    if (exception instanceof HttpException) {
+      status = exception.getStatus();
+      message = exception.message;
+
+      if (status >= 500) {
+        this.loggingService.error(
+          `${date} ${req.method} ${req.url} → ${status} | ${message}`,
+        );
+      } else {
+        this.loggingService.warn(
+          `${date} ${req.method} ${req.url} → ${status} | ${message}`,
+        );
+      }
+    } else {
+      this.loggingService.fatal(
+        `${date} ${req.method} ${req.url} → 500 | ${(exception as Error)?.stack}`,
+      );
     }
 
     res.status(status).json({

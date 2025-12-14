@@ -2,8 +2,10 @@ version: '3.9'
 
 services:
   app:
-    image: novedice/home-library:latest
-    container_name: home-library-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: home-library-app-nodejs2025q2
     ports: 
       - "4000:4000"
     env_file: 
@@ -15,8 +17,10 @@ services:
     restart: unless-stopped
 
   db:
-    image: novedice/database-postgres:latest
-    container_name: database
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    container_name: database-nodejs2025q2
     env_file:
       - .env
     environment:

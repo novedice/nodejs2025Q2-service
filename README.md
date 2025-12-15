@@ -1,5 +1,5 @@
 # Home Library Service
-## REST service: Containerization and Database (PostgreSQL) & ORM
+## REST service: Logging & Error Handling and Authentication and Authorization
 
 ## Prerequisites
 
@@ -20,84 +20,107 @@ git clone https://github.com/novedice/nodejs2025Q2-service.git
 git checkout development
 ```
 
-### 2. Create .env file
+## 2. Environment configuration
+### 2.1 Create .env file
 ```
-mv .env.example .env
+cp .env.example .env
 ```
 
+### 2.2 Update .env file
+
+⚠️ IMPORTANT
+
+When running the application locally via Docker, update DATABASE_URL:
+```
+# DATABASE_URL="postgresql://user:password@db:5432/home_library"
+DATABASE_URL="postgresql://user:password@localhost:5432/home_library"
+```
+
+All other variables can remain unchanged.
+
+  
 ### 3. Run the application
 
-- If you want to use prebuilt Docker Hub images:
+The application and database will be built and run locally.
 ```
-docker-compose up
+docker-compose up --build
 ```
 
 *Docker Configuration*  
 
-- Application image: novedice/home-library:latest
+ - Application: built locally from Dockerfile
+ - Database: PostgreSQL 16
+ - Network: user-defined bridge network
+ - Volume: postgres_data for persistent database storage
+ - Restart policy: unless-stopped  
 
-- Database image: novedice/database-postgres:latest
-
-- Containers are connected through a user-defined bridge network app-network.
-
-- Database files are stored in a Docker volume: postgres_data.
-
-- Containers automatically restart if they crash (restart: unless-stopped).
-
-### 4.1 Verify containers are running*  
+  
+### 4. Verify containers are running*  
 ```
 docker ps
 ```
 
-home-library-app — Application container
+home-library-app-nodejs2025q2 — Application container
 
-database — PostgreSQL container
-  
-  
-### 4.2 Apply database migrations
+database-nodejs2025q2 — PostgreSQL container
 
+  
+## 5. Apply database generate
+
+```
+npx prisma generate
+```
+  
+## 6. Apply database migrations
+  
 apply Prisma migrations to create the necessary tables:
 ```
-docker exec -it home-library-app npx prisma migrate deploy
+npx prisma migrate deploy
 ```
   
 After starting the app on port (4000 as default)
-The app will be available at: http://localhost:4000  *The documentation does not work, so it will be "statusCode":404 NotFoundError. So please use endpoints which you can find below*
-
-### 5. Testing
-
-- To run tests inside the container:
+The app doc will be available at: http://localhost:4000/doc
+  
+## 7. Testing
+Authorization test
 ```
-docker exec -it home-library-app npm run test
-```
-
-- Or you can run it after installing node modules
-```
-npm install
-npm run test
-```
-
-## 6. Docker Image Vulnerability Scan
-
-You can check your Docker images for known security vulnerabilities using [Trivy](https://github.com/aquasecurity/trivy).
-
-### 6.1. Install Trivy
-
-**macOS (Homebrew):**
-```
-brew install trivy
-```
-**Linux (Debian/Ubuntu):**
-```
-sudo apt install trivy
-```
-### 6.2. Scan Docker Images
-```
-npm run scan:vulnerabilities
+npm run test:auth
 ```
   
+## 8. Logging & Error Handling
+  
+Implemented features:
 
-## API Endpoints
+ - Custom LoggingService
+ - Logging levels based on NestJS (log, error, warn, debug, verbose)
+ - Logging of:
+    - request URL
+    - request body
+    - query parameters
+    - response status code
+
+ - Logs are written to files
+ - Log file rotation by size (configurable via environment variables)
+ - Separate logging for error-level messages
+ - Global ExceptionFilter for handling HTTP and unexpected errors
+  
+## 9. Authentication & Authorization
+
+ - POST /auth/signup
+ - POST /auth/login
+ - POST /auth/refresh
+ - Passwords are stored as hashed values
+ - JWT Access Tokens:
+ - Payload contains userId and login
+ - Secret key stored in .env
+ - Authentication required for all routes except:
+    - /auth/signup
+    - /auth/login
+    - /auth/refresh
+    - /doc
+ - Custom middleware checks JWT for protected routes
+
+## 10. API Endpoints
 
 ### Users
 - `GET /user` — Get all users  
@@ -139,6 +162,7 @@ npm run scan:vulnerabilities
 
 Notes
 
-- No local PostgreSQL installation is required — the database runs inside a Docker container.
-- Prisma ORM handles migrations and data access.
-- All database connection variables are stored in .env.
+ - The project is fully Dockerized
+ - Database runs in a container
+ - Prisma ORM manages schema and migrations
+ - Environment variables are required for correct startup
